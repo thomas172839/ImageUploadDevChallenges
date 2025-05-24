@@ -1,31 +1,60 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="css/styles.css">
-    <title>ImageUpload</title>
-    <link rel="icon" href="resources/logo-small.svg" sizes="any">
+    <title>Image Upload Dev Challenges</title>
 </head>
 <body>
-    <header>
-        <img class="logo" src="resources/logo.svg" alt="ImageUpload Logo">
-        <button class="btn btn-primary"><img class="theme" src="resources/Sun_fill.svg" alt="theme logo"></button>
-    </header>
+    <div>
+        <header>
+            <div class="logo-container">
+                <img class="logo" src="resources/logo-small.svg" alt="ImageUpload Logo" />
+                <h1 class="title">Image Upload</h1>
+            </div>
+            <button class="btn btn-primary" id="themeToggleBtn">
+                <img
+                    class="theme"
+                    id="themeIcon"
+                    src="resources/Moon_fill.svg"
+                    alt="theme logo"
+                />
+            </button>
+        </header>
+        <main>
+            <div class="upload-area">
+                <img class="upload-icon" src="resources/exit.svg" alt="upload icon" />
+                <h2>
+                    Drag &amp; drop a file or
+                    <label for="fileInput" style="cursor:pointer;">
+                        browse files
+                    </label>
+                    <input
+                        type="file"
+                        id="fileInput"
+                        accept=".svg, .png, .jpg, .gif"
+                        style="display: none;"
+                    />
+                </h2>
+                <p class="file-type">JPG, PNG or GIF - Max file size 2MB</p>
+            </div>
+        </main>
+        <footer></footer>
+    </div>
+    <script>
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        const themeIcon = document.getElementById('themeIcon');
+        let isSun = true;
 
-    <main>
-        <div class="upload-area">
-            <img class="upload-icon" src="resources/exit.svg" alt="upload icon">
-            <p>Drag & drop a file or browse files</p>
-            <p class="file-type">SVG, PNG, JPG or GIF (max. 800x800px)</p>
-            <p class="file-size">Max file size 2MB</p>
-            <input type="file" id="fileInput" accept=".svg, .png, .jpg, .gif">
-        </div>
-    </main>
-
-    <footer>
-    </footer>
-
-    <script src="script.js"></script>
+        themeToggleBtn.addEventListener('click', function() {
+            isSun = !isSun;
+            document.body.style.backgroundColor = isSun ? "#fff" : "#222";
+            document.body.style.color = isSun ? "#222" : "#fff";
+            themeIcon.src = isSun ? "resources/Moon_fill.svg" : "resources/Sun_fill.svg";
+        });
+    </script>
 </body>
 </html>
