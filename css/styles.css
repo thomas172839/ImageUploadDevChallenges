@@ -2,11 +2,26 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
 
+:root {
+    --background-color: #ffffff;
+    --page-background: #F9FAFBCC;
+    --text-color: #000000;
+    --h-text-color: #000000;
+    --border-color: #E5E7EB;
+}
+
+[data-theme="dark"] {
+    --background-color: #212936;
+    --page-background: #121826;
+    --text-color: #E5E7EB;
+    --h-text-color: #ffffff;
+    --border-color: #4D5562;
+}
 
 
 body {
     font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
-    background: #E5E7EB;
+    background: var(--page-background);
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -14,41 +29,47 @@ body {
     margin: 0;
 }
 
-h1,h2 {
+h1,
+h2 {
     font-size: 0.875rem;
     margin: 0;
+    color: var(--h-text-color);
 }
 
 
-
+input[type="file"] {
+    display: none;
+}
 
 .upload-area {
 
     width: 500px;
-    min-height: 200px;
+    min-height: 300px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: 2px dashed #97bef4;
-    border-radius: 12px;
-    background-color: #ffffff;
+    outline: 1px;
+
+    outline-offset: -10px;
+    outline-style: dashed;
+    outline-color: var(--border-color);
+
+    border-radius: 15px;
+    border-color: var(--border-color);
+    background-color: var(--background-color);
 
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
     margin: auto;
     margin-top: 30vh;
 
-
-
- 
-    
-  
     justify-content: center;
 }
 
 p {
-    font-size: 0.75rem;
+    font-size: 0.625rem;
     margin: 0;
+    color: var(--text-color);
 }
 
 .upload-area label {
@@ -57,7 +78,15 @@ p {
     color: #3662E3;
 }
 
+.upload-icon {
+    margin: 1rem;
+}
 
+.upload-text {
+    font-size: 0.75rem;
+    color: var(--text-color);
+    margin: 0.5rem;
+}
 
 
 
@@ -67,7 +96,7 @@ p {
 
 header {
     position: sticky;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 1rem;
     display: flex;
     justify-content: space-between;
@@ -82,4 +111,12 @@ header {
     align-items: center;
     gap: 0.5rem;
     padding: 0.5rem 1rem;
+}
+
+.btn {
+    background-color: var(--background-color);
+    border: 1px solid #97bef4;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    border-color: var(--border-color)
 }
