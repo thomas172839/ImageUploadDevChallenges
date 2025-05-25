@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
+    // Initialize the theme toggle button
     const themeToggleBtn = document.getElementById('themeToggleBtn');
     const themeIcon = document.getElementById('themeIcon');
     let isSun = true;
@@ -13,7 +14,33 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Handle file input
     const fileInput = document.getElementById('fileInput');
-    fileInput.addEventListener('change', function (event) {
+    fileInput.addEventListener('change', handleFile);
+
+    // Drag and drop support
+    const uploadArea = document.querySelector('.upload-area');
+
+    uploadArea.addEventListener('dragover', function (e) {
+        e.preventDefault();
+        uploadArea.classList.add('dragover');
+    });
+
+    uploadArea.addEventListener('dragleave', function (e) {
+        e.preventDefault();
+        uploadArea.classList.remove('dragover');
+    });
+
+    uploadArea.addEventListener('drop', function (e) {
+        e.preventDefault();
+        uploadArea.classList.remove('dragover');
+        const file = e.dataTransfer.files[0];
+        if (file) {
+            // Set the file to the input for consistency
+            fileInput.files = e.dataTransfer.files;
+            handleFile({ target: { files: [file] } });
+        }
+    });
+
+    function handleFile(event) {
         const file = event.target.files[0];
         if (file) {
             // Example: check file size (max 2MB)
@@ -24,11 +51,8 @@ document.addEventListener('DOMContentLoaded', function () {
             }
             // Example: show file name
             alert('Selected file: ' + file.name);
-            // You can add further processing here (e.g., upload, preview, etc.)
-            
             // For demonstration, let's just log the file name
-            console.log('File selected:', file.name)
-
+            console.log('File selected:', file.name);
 
             // If you want to upload the file, you can use FormData and fetch API
             const formData = new FormData();
@@ -47,11 +71,8 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .catch(error => {
                 console.error('Error uploading file:', error);
-                alert('An error occurred while uploading the file.'+error.message);
+                alert('An error occurred while uploading the file.' + error.message);
             });
-
-
-
         }
-    });
+    }
 });

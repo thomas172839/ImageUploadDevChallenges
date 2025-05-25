@@ -8,6 +8,8 @@
     --text-color: #000000;
     --h-text-color: #000000;
     --border-color: #E5E7EB;
+    --background-dragover-color:#EAF1FF;
+    --outline-dragover-color: #3662E3;
 }
 
 [data-theme="dark"] {
@@ -16,6 +18,8 @@
     --text-color: #E5E7EB;
     --h-text-color: #ffffff;
     --border-color: #4D5562;
+    --background-dragover-color:#32415f;
+    --outline-dragover-color: #3662E3;
 }
 
 
@@ -48,13 +52,13 @@ input[type="file"] {
     display: flex;
     flex-direction: column;
     align-items: center;
-    outline: 1px;
+    outline: 2px;
 
     outline-offset: -10px;
     outline-style: dashed;
     outline-color: var(--border-color);
 
-    border-radius: 15px;
+    border-radius: 20px;
     border-color: var(--border-color);
     background-color: var(--background-color);
 
@@ -64,6 +68,13 @@ input[type="file"] {
     margin-top: 30vh;
 
     justify-content: center;
+}
+
+.upload-area.dragover {
+    outline-color: var(--outline-dragover-color);
+    background-color: var(--background-dragover-color);
+    transition: background-color 0.3s ease;
+
 }
 
 p {
