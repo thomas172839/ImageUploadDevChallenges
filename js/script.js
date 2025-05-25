@@ -49,10 +49,29 @@ document.addEventListener('DOMContentLoaded', function () {
                 fileInput.value = '';
                 return;
             }
-            // Example: show file name
-            alert('Selected file: ' + file.name);
-            // For demonstration, let's just log the file name
-            console.log('File selected:', file.name);
+
+            // Replace upload area with uploading message
+            const uploadArea = document.querySelector('.upload-area');
+            const mainContent = document.querySelector('.main-content');
+            uploadArea.innerHTML = `
+                <div class="uploading-message">
+                    <img src="resources/logo-small.svg" alt="Uploading...">
+                    <p>Uploading... Please wait</p>
+                    <div class="loading-bar-container">
+                        <div class="loading-bar"></div>
+                    </div>
+                </div>
+            `;
+
+            // Animate loading bar
+            const loadingBar = document.querySelector('.loading-bar');
+            let progress = 0;
+            const interval = setInterval(() => {
+                if (progress < 90) {
+                    progress += Math.random() * 10;
+                    loadingBar.style.width = Math.min(progress, 90) + '%';
+                }
+            }, 200);
 
             // If you want to upload the file, you can use FormData and fetch API
             const formData = new FormData();
@@ -63,15 +82,61 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .then(response => response.json())
             .then(data => {
-                if (data.error) {
-                    alert('Error: ' + data.error);
-                } else {
-                    alert('Upload successful! Filename: ' + data.filename);
-                }
+                clearInterval(interval);
+                if (loadingBar) loadingBar.style.width = '100%';
+
+                setTimeout(() => {
+                    if (data.error) {
+                        uploadArea.innerHTML = `<p class="error">Error: ${data.error}</p>`;
+                    } else {
+                        mainContent.innerHTML = `
+                            <div class="upload-image-container">
+                                ${data.url ? `<img src="${data.url}" alt="Uploaded Image">` : '<p class="error">No image URL returned from server.</p>'}
+                            </div>
+                            <div class="upload-actions">
+                                <button id="shareBtn" type="button">
+                                    <img src="resources/Link.svg" alt="Share" class="icon">
+                                    Share
+                                </button>
+                                <a id="downloadBtn" href="${data.url || '#'}" download>
+                                    <button type="button">
+                                        <img src="resources/download.svg" alt="Download" class="icon">
+                                        Download
+                                    </button>
+                                </a>
+                            </div>
+                        `;
+
+                        // Add event listener for share button
+                        const shareBtn = document.getElementById('shareBtn');
+                        if (shareBtn && data.url) {
+                            shareBtn.addEventListener('click', async () => {
+                                if (navigator.share) {
+                                    try {
+                                        await navigator.share({
+                                            title: 'Uploaded Image',
+                                            url: data.url
+                                        });
+                                    } catch (err) {
+                                        alert('Sharing failed: ' + err.message);
+                                    }
+                                } else {
+                                    // Fallback: copy link to clipboard
+                                    try {
+                                        await navigator.clipboard.writeText(data.url);
+                                        alert('Image URL copied to clipboard!');
+                                    } catch (err) {
+                                        alert('Could not copy URL: ' + err.message);
+                                    }
+                                }
+                            });
+                        }
+                    }
+                }, 400);
             })
             .catch(error => {
-                console.error('Error uploading file:', error);
-                alert('An error occurred while uploading the file.' + error.message);
+                clearInterval(interval);
+                uploadArea.innerHTML = `<p class="error">An error occurred while uploading the file. ${error.message}</p>`;
             });
         }
     }

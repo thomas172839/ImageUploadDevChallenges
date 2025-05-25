@@ -35,7 +35,13 @@ app.post('/upload', upload.single('file'), (req, res) => {
     if (!req.file) {
         return res.status(400).json({ error: 'No file uploaded or file too large.' });
     }
-    res.json({ message: 'Upload successful!', filename: req.file.filename });
+    // Build the URL to access the uploaded file
+    const fileUrl = `/uploads/${req.file.filename}`;
+    res.json({ 
+        message: 'Upload successful!', 
+        filename: req.file.filename,
+        url: fileUrl
+    });
 });
 
 // Start server

@@ -47,8 +47,10 @@ input[type="file"] {
 
 .upload-area {
 
-    width: 500px;
+    min-width: 300px;
+    max-width: 500px;
     min-height: 300px;
+    max-height: 500px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -59,7 +61,6 @@ input[type="file"] {
     outline-color: var(--border-color);
 
     border-radius: 20px;
-    border-color: var(--border-color);
     background-color: var(--background-color);
 
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -69,6 +70,8 @@ input[type="file"] {
 
     justify-content: center;
 }
+
+
 
 .upload-area.dragover {
     outline-color: var(--outline-dragover-color);
@@ -99,11 +102,47 @@ p {
     margin: 0.5rem;
 }
 
+.uploading-message,
+.upload-success {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    outline: 0;
+}
+
+.upload-image-container img {
+    background-color: var(--background-color);
+    padding: 1rem;
+
+    position: relative;
+    top: 50%;
 
 
+    min-width: 300px;
+    max-width: 500px;
+    min-height: 300px;
+    max-height: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    border-radius: 20px;
+    background-color: var(--background-color);
+
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+    margin: auto;
+    margin-top: 30vh;
+
+    justify-content: center;
+}
 
 
-
+.error {
+    color: red;
+}
 
 header {
     position: sticky;
@@ -127,7 +166,59 @@ header {
 .btn {
     background-color: var(--background-color);
     border: 1px solid #97bef4;
-    border-radius: 8px;
+    border-radius: 10px;
     padding: 0.5rem 1rem;
     border-color: var(--border-color)
+}
+
+.upload-actions button {
+    background-color: #3662E3;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 0.6em 1.5em;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 10px rgba(54, 98, 227, 0.08);
+}
+
+.upload-actions button:hover,
+.upload-actions button:focus {
+    background-color: #2747b0;
+    outline: none;
+}
+
+.upload-actions a {
+    text-decoration: none;
+}
+
+/* Loading bar styles */
+.loading-bar-container {
+    width: 100%;
+    margin-top: 24px;
+}
+
+.loading-bar {
+    width: 0%;
+    height: 6px;
+    background: #2F80ED;
+    border-radius: 3px;
+    transition: width 0.3s;
+}
+
+/* Upload actions layout */
+.upload-actions {
+    margin-top: 16px;
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.upload-actions .icon {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 6px;
 }
